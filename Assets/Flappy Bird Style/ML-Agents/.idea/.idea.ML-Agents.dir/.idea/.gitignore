@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/contentModel.xml
+/projectSettingsUpdater.xml
+/.idea.ML-Agents.iml
+# Datasource local storage ignored files
+/../../../../../../../../../../../../:\Users\home-user\Desktop\CS4442-Project\Flappy_Bird\Assets\Flappy Bird Style\ML-Agents\.idea\.idea.ML-Agents.dir\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
