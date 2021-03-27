@@ -1,11 +1,14 @@
-﻿using Unity.MLAgents;
+﻿using System;
+using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SmartFlappy : Agent
 {
     public GameControl gameControl; // this was a singleton before
+    public ColumnPool columnPool;
     
     public float upForce; //Upward force of the "flap".
     private bool isDead = false; //Has the player collided with a wall?
@@ -17,10 +20,24 @@ public class SmartFlappy : Agent
 
     public bool heuristicOnly;
 
+    public Sprite initialSprite;
     public override void OnEpisodeBegin()
     {
-        // transform.localPosition = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
-        transform.localPosition = new Vector3(-2, 2, 0);
+        
+        columnPool.ResetColumns();
+        
+        anim.SetTrigger("Reset");
+        rb2d.velocity = Vector2.zero;
+        // rb2d.angularVelocity = Single.NaN;
+        transform.localPosition = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
+        // transform.localRotation = Quaternion.Euler(0, 0, 0); //Quaternion.identity);
+        // gameObject.GetComponent<SpriteRenderer>().sprite = initialSprite;
+
+        isDead = false;
+
+        Debug.Log("episode begin");
+        
+        // transform.localPosition = new Vector3(-2, 2, 0);
 
         passedCol = 0;
         
@@ -33,6 +50,8 @@ public class SmartFlappy : Agent
 
     private void Start()
     {
+        
+        
         //Get reference to the Animator component attached to this GameObject.
         anim = GetComponent<Animator>();
         //Get and store a reference to the Rigidbody2D attached to this GameObject.

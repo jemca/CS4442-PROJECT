@@ -2,67 +2,80 @@
 
 public class ColumnPool : MonoBehaviour
 {
-	public GameControl gameControl;
-	
-	public GameObject columnPrefab;									//The column game object.
-	public int columnPoolSize = 5;									//How many columns to keep on standby.
-	public float spawnRate = 3f;									//How quickly columns spawn.
-	public float columnMin = -1f;									//Minimum y value of the column position.
-	public float columnMax = 3.5f;									//Maximum y value of the column position.
+    public GameControl gameControl;
 
-	public GameObject[] columns;									//Collection of pooled columns.
-	public int currentColumn = 0;									//Index of the current column in the collection.
+    public GameObject columnPrefab; //The column game object.
+    public int columnPoolSize = 5; //How many columns to keep on standby.
+    public float spawnRate = 3f; //How quickly columns spawn.
+    public float columnMin = -1f; //Minimum y value of the column position.
+    public float columnMax = 3.5f; //Maximum y value of the column position.
 
-	public Vector2 objectPoolPosition = new Vector2 (-15,-25);		//A holding position for our unused columns offscreen.
-	public float spawnXPosition = 10f;
+    public GameObject[] columns; //Collection of pooled columns.
+    public int currentColumn = 0; //Index of the current column in the collection.
 
-	private float timeSinceLastSpawned;
+    public Vector2 objectPoolPosition = new Vector2(-15, -25); //A holding position for our unused columns offscreen.
+    public float spawnXPosition = 10f;
 
-
-	void Start()
-	{
-		
-		
-		timeSinceLastSpawned = 0f;
-
-		//Initialize the columns collection.
-		columns = new GameObject[columnPoolSize];
-		//Loop through the collection... 
-		for(int i = 0; i < columnPoolSize; i++)
-		{
-			//...and create the individual columns.
-			columns[i] = Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity,transform.parent);
-			columns[i].GetComponent<ScrollingObject>().gameControl = gameControl;
-		}
-	}
+    private float timeSinceLastSpawned;
 
 
-	//This spawns columns as long as the game is not over.
-	void Update()
-	{
-		timeSinceLastSpawned += Time.deltaTime;
-		
-		//NEW
-		if (gameControl.gameOver == false && timeSinceLastSpawned >= spawnRate) 
-			
-		//OLD	
-		// if (GameControl.instance.gameOver == false && timeSinceLastSpawned >= spawnRate) 
-		{	
-			timeSinceLastSpawned = 0f;
+    void Start()
+    {
+        timeSinceLastSpawned = 0f;
 
-			//Set a random y position for the column
-			float spawnYPosition = Random.Range(columnMin, columnMax);
+        //Initialize the columns collection.
+        columns = new GameObject[columnPoolSize];
 
-			//...then set the current column to that position.
-			columns[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition,0);
+        //Loop through the collection... 
+        for (int i = 0; i < columnPoolSize; i++)
+        {
+            //...and create the individual columns.
+            columns[i] = Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
+            columns[i].GetComponent<ScrollingObject>().gameControl = gameControl;
+        }
+    }
 
-			//Increase the value of currentColumn. If the new size is too big, set it back to zero
-			currentColumn ++;
 
-			if (currentColumn >= columnPoolSize) 
-			{
-				currentColumn = 0;
-			}
-		}
-	}
+    //This spawns columns as long as the game is not over.
+    void Update()
+    {
+        timeSinceLastSpawned += Time.deltaTime;
+
+        //NEW
+        if (gameControl.gameOver == false && timeSinceLastSpawned >= spawnRate)
+
+            //OLD	
+            // if (GameControl.instance.gameOver == false && timeSinceLastSpawned >= spawnRate) 
+        {
+            timeSinceLastSpawned = 0f;
+
+            //Set a random y position for the column
+            float spawnYPosition = Random.Range(columnMin, columnMax);
+
+            //...then set the current column to that position.
+            columns[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
+
+            //Increase the value of currentColumn. If the new size is too big, set it back to zero
+            currentColumn++;
+
+            if (currentColumn >= columnPoolSize)
+            {
+                currentColumn = 0;
+            }
+        }
+
+        // else if (gameControl.gameOver == true)
+        // {
+        //
+        // }
+    }
+
+
+    public void ResetColumns()
+    {
+        for (int i = 0; i < columnPoolSize; i++)
+        {
+            columns[i].transform.position = objectPoolPosition;
+        }
+    }
 }
