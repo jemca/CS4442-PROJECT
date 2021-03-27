@@ -35,7 +35,7 @@ public class SmartFlappy : Agent
 
         isDead = false;
 
-        Debug.Log("episode begin");
+        // Debug.Log("episode begin");
         
         // transform.localPosition = new Vector3(-2, 2, 0);
 
