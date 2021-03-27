@@ -11,9 +11,14 @@ public class SmartFlappy : Agent
     private Animator anim; //Reference to the Animator component.
     private Rigidbody2D rb2d; //Holds a reference to the Rigidbody2D component of the bird.
 
+    public int passedCol = 0;
+
+    public bool heuristicOnly;
+
     public override void OnEpisodeBegin()
     {
         transform.position = new Vector3(-2, 2, 0);
+        passedCol = 0;
         GameControl.instance.RestartGame();
     }
 
@@ -34,12 +39,37 @@ public class SmartFlappy : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        Debug.Log(Time.time + " " + actions.DiscreteActions[0]);
+        // Debug.Log(Time.time + " " + actions.DiscreteActions[0]);
 
         if (isDead == false)
         {
             AddReward(+10);
             if (actions.DiscreteActions[0] == 1)
+            {
+                //...tell the animator about it and then...
+                anim.SetTrigger("Flap");
+                //...zero out the birds current y velocity before...
+                rb2d.velocity = Vector2.zero;
+                //	new Vector2(rb2d.velocity.x, 0);
+                //..giving the bird some upward force.
+                rb2d.AddForce(new Vector2(0, upForce));
+            }
+        }
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        heuristicOnly = true;
+
+    }
+    
+    private void Update()
+    {
+        //Don't allow control if the bird has died.
+        if (isDead == false && heuristicOnly) 
+        {
+            //Look for input to trigger a "flap".
+            if (Input.GetMouseButtonDown(0)) 
             {
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
@@ -65,5 +95,18 @@ public class SmartFlappy : Agent
 
         SetReward(-1000);
         EndEpisode();
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("SCORE"))
+        {
+            //If the bird hits the trigger collider in between the columns then
+            //tell the game control that the bird scored.
+            GameControl.instance.BirdScored();
+            AddReward(+100);
+            passedCol++;
+            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol);
+        }
     }
 }

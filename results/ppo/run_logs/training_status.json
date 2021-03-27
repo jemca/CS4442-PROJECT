@@ -2,17 +2,17 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 34091,
-                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-34091.onnx",
-                "reward": 320.4166666666667,
-                "creation_time": 1616148074.7741158
+                "steps": 63111,
+                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-63111.onnx",
+                "reward": 1725.0,
+                "creation_time": 1616152829.504729
             }
         ],
         "final_checkpoint": {
-            "steps": 34091,
+            "steps": 63111,
             "file_path": "results\\ppo\\SmartBehaviour.onnx",
-            "reward": 320.4166666666667,
-            "creation_time": 1616148074.7741158
+            "reward": 1725.0,
+            "creation_time": 1616152829.504729
         }
     },
     "metadata": {
