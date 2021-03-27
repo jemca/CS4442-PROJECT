@@ -3,6 +3,7 @@
 public class ColumnPool : MonoBehaviour
 {
     public GameControl gameControl;
+    public SmartFlappy bird;
 
     public GameObject columnPrefab; //The column game object.
     public int columnPoolSize = 5; //How many columns to keep on standby.

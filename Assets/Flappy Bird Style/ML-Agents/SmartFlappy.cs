@@ -70,9 +70,9 @@ public class SmartFlappy : Agent
 
         if (isDead == false)
         {
-            AddReward(+10);
+            AddReward(+1);
             
-            if (actions.DiscreteActions[0] == 1)
+            if (actions.DiscreteActions[0] == 0)
             {
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
