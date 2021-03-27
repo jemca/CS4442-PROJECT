@@ -3,13 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameControl : MonoBehaviour
+public class GameControl2 : MonoBehaviour 
 {
-
-	public GameObject sky1, sky2;
-	
-	
-	// public static GameControl instance;			//A reference to our game control script so we can access it statically.
+	public static GameControl2 instance;			//A reference to our game control script so we can access it statically.
 	public Text scoreText;						//A reference to the UI text component that displays the player's score.
 	public GameObject gameOvertext;				//A reference to the object that displays the text which appears when the player dies.
 
@@ -18,17 +14,17 @@ public class GameControl : MonoBehaviour
 	public float scrollSpeed = -1.5f;
 
 
-	// void Awake()
-	// {
-	// 	//If we don't currently have a game control...
-	// 	if (instance == null)
-	// 		//...set this one to be it...
-	// 		instance = this;
-	// 	//...otherwise...
-	// 	else if(instance != this)
-	// 		//...destroy this one because it is a duplicate.
-	// 		Destroy (gameObject);
-	// }
+	void Awake()
+	{
+		//If we don't currently have a game control...
+		if (instance == null)
+			//...set this one to be it...
+			instance = this;
+		//...otherwise...
+		else if(instance != this)
+			//...destroy this one because it is a duplicate.
+			Destroy (gameObject);
+	}
 
 	void Update()
 	{
@@ -40,9 +36,6 @@ public class GameControl : MonoBehaviour
 		//If the game is over and the player has pressed some input...
 		if (gameOver) // && Input.GetMouseButtonDown(0))
 		{
-			sky1.SetActive(false);
-			sky2.SetActive(false);
-
 			//...reload the current scene.
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}

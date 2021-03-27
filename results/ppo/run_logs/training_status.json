@@ -2,17 +2,29 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 63111,
-                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-63111.onnx",
-                "reward": 1725.0,
-                "creation_time": 1616152829.504729
+                "steps": 85534,
+                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-85534.onnx",
+                "reward": 1135.9223300970873,
+                "creation_time": 1616819395.3464937
+            },
+            {
+                "steps": 400022,
+                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-400022.onnx",
+                "reward": 2212.162162162162,
+                "creation_time": 1616824286.5109131
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\ppo\\SmartBehaviour\\SmartBehaviour-0.onnx",
+                "reward": null,
+                "creation_time": 1616826070.358873
             }
         ],
         "final_checkpoint": {
-            "steps": 63111,
+            "steps": 0,
             "file_path": "results\\ppo\\SmartBehaviour.onnx",
-            "reward": 1725.0,
-            "creation_time": 1616152829.504729
+            "reward": null,
+            "creation_time": 1616826070.358873
         }
     },
     "metadata": {

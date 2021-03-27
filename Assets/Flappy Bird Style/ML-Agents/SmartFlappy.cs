@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SmartFlappy : Agent
 {
+    public GameControl gameControl; // this was a singleton before
+    
     public float upForce; //Upward force of the "flap".
     private bool isDead = false; //Has the player collided with a wall?
 
@@ -17,9 +19,15 @@ public class SmartFlappy : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
+        // transform.localPosition = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
+        transform.localPosition = new Vector3(-2, 2, 0);
+
         passedCol = 0;
-        GameControl.instance.RestartGame();
+        
+        //NEW
+        gameControl.RestartGame();
+        //OLD
+        // GameControl.instance.RestartGame();
     }
 
 
@@ -44,6 +52,7 @@ public class SmartFlappy : Agent
         if (isDead == false)
         {
             AddReward(+10);
+            
             if (actions.DiscreteActions[0] == 1)
             {
                 //...tell the animator about it and then...
@@ -91,7 +100,11 @@ public class SmartFlappy : Agent
         //...tell the Animator about it...
         anim.SetTrigger("Die");
         //...and tell the game control about it.
-        GameControl.instance.BirdDied();
+        
+        //NEW
+        gameControl.BirdDied();        
+        //OLD
+        // GameControl.instance.BirdDied();
 
         SetReward(-1000);
         EndEpisode();
@@ -103,7 +116,12 @@ public class SmartFlappy : Agent
         {
             //If the bird hits the trigger collider in between the columns then
             //tell the game control that the bird scored.
-            GameControl.instance.BirdScored();
+            
+            //NEW
+            gameControl.BirdScored();
+            //OLD
+            // GameControl.instance.BirdScored();
+            
             AddReward(+100);
             passedCol++;
             Debug.Log(Time.time + "PASSED COLUMN:" + passedCol);
