@@ -17,7 +17,7 @@ public class SmartFlappy : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(-2, 2, 0);
+        transform.position = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
         passedCol = 0;
         GameControl.instance.RestartGame();
     }
