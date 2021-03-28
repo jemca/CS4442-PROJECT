@@ -7,6 +7,7 @@ public class ScrollingObject : MonoBehaviour
 	public GameControl gameControl;
 
 	private Rigidbody2D rb2d;
+	
 
 	// Use this for initialization
 	void Start () 

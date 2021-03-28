@@ -1,17 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ColumnPool : MonoBehaviour
 {
     public GameControl gameControl;
-    public SmartFlappy bird;
+    // public SmartFlappy bird;
 
     public GameObject columnPrefab; //The column game object.
+    public GameObject targetPrefab; //SCORE POINTS
+
+    
     public int columnPoolSize = 5; //How many columns to keep on standby.
     public float spawnRate = 3f; //How quickly columns spawn.
     public float columnMin = -1f; //Minimum y value of the column position.
     public float columnMax = 3.5f; //Maximum y value of the column position.
 
-    public GameObject[] columns; //Collection of pooled columns.
+
+
+    
+    
     public int currentColumn = 0; //Index of the current column in the collection.
 
     public Vector2 objectPoolPosition = new Vector2(-15, -25); //A holding position for our unused columns offscreen.
@@ -19,13 +26,17 @@ public class ColumnPool : MonoBehaviour
 
     private float timeSinceLastSpawned;
 
-
+    [Space(20)]
+    public GameObject[] columns; //Collection of pooled columns.
+    public GameObject[] targets; //Collection of pooled columns.
     void Start()
     {
         timeSinceLastSpawned = 0f;
 
         //Initialize the columns collection.
         columns = new GameObject[columnPoolSize];
+        targets = new GameObject[columnPoolSize];
+
 
         //Loop through the collection... 
         for (int i = 0; i < columnPoolSize; i++)
@@ -33,6 +44,12 @@ public class ColumnPool : MonoBehaviour
             //...and create the individual columns.
             columns[i] = Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
             columns[i].GetComponent<ScrollingObject>().gameControl = gameControl;
+            
+            targets[i] = Instantiate(targetPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
+            targets[i].GetComponent<ScrollingObject>().gameControl = gameControl;
+            
+            
+            
         }
     }
 
@@ -55,6 +72,8 @@ public class ColumnPool : MonoBehaviour
 
             //...then set the current column to that position.
             columns[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
+            targets[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
+
 
             //Increase the value of currentColumn. If the new size is too big, set it back to zero
             currentColumn++;
@@ -77,6 +96,8 @@ public class ColumnPool : MonoBehaviour
         for (int i = 0; i < columnPoolSize; i++)
         {
             columns[i].transform.position = objectPoolPosition;
+            targets[i].transform.position = objectPoolPosition;
+
         }
     }
 }

@@ -17,10 +17,37 @@ public class SmartFlappy : Agent
     private Rigidbody2D rb2d; //Holds a reference to the Rigidbody2D component of the bird.
 
     public int passedCol = 0;
+    public int life = 0;
 
     public bool heuristicOnly;
 
-    public Sprite initialSprite;
+    [Tooltip("Whether this is training mode or gameplay mode")]
+    public bool trainingMode;
+    
+    
+    
+    
+    /// <summary>
+    /// Initialize the agent
+    /// </summary>
+    public override void Initialize()
+    {
+        
+        //Get reference to the Animator component attached to this GameObject.
+        anim = GetComponent<Animator>();
+        //Get and store a reference to the Rigidbody2D attached to this GameObject.
+        rb2d = GetComponent<Rigidbody2D>();
+        
+        // If not training mode, no max step, play forever
+        if (!trainingMode) MaxStep = 0;
+    }
+    
+    
+    
+    
+    
+    
+    
     public override void OnEpisodeBegin()
     {
         
@@ -40,6 +67,8 @@ public class SmartFlappy : Agent
         // transform.localPosition = new Vector3(-2, 2, 0);
 
         passedCol = 0;
+        life = 0;
+        
         
         //NEW
         gameControl.RestartGame();
@@ -48,32 +77,36 @@ public class SmartFlappy : Agent
     }
 
 
-    private void Start()
-    {
-        
-        
-        //Get reference to the Animator component attached to this GameObject.
-        anim = GetComponent<Animator>();
-        //Get and store a reference to the Rigidbody2D attached to this GameObject.
-        rb2d = GetComponent<Rigidbody2D>();
-    }
+    // private void Start()
+    // {
+    //     //Get reference to the Animator component attached to this GameObject.
+    //     anim = GetComponent<Animator>();
+    //     //Get and store a reference to the Rigidbody2D attached to this GameObject.
+    //     rb2d = GetComponent<Rigidbody2D>();
+    // }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
+        
+        //ADD TARGET POSITIION TOO
     }
 
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        // Debug.Log(Time.time + " " + actions.DiscreteActions[0]);
+        // Debug.Log(Time.time + " AI input: " + actions.DiscreteActions[0]);
 
-        if (isDead == false)
+        if (trainingMode && isDead == false)
         {
-            AddReward(+1);
+            life++;
+            var bonus = 0.05f * life;
+            AddReward(+5f+bonus);
             
             if (actions.DiscreteActions[0] == 0)
             {
+                // Debug.Log("agent received input to fly");
+                
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
                 //...zero out the birds current y velocity before...
@@ -99,6 +132,8 @@ public class SmartFlappy : Agent
             //Look for input to trigger a "flap".
             if (Input.GetMouseButtonDown(0)) 
             {
+                Debug.Log("key pressed to fly");
+                
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
                 //...zero out the birds current y velocity before...
@@ -112,6 +147,10 @@ public class SmartFlappy : Agent
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        
+        // Debug.Log(other.gameObject.tag);
+        
+        
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;
         // If the bird collides with something set it to dead...
@@ -125,7 +164,8 @@ public class SmartFlappy : Agent
         //OLD
         // GameControl.instance.BirdDied();
 
-        SetReward(-1000);
+        AddReward(-1000);
+        
         EndEpisode();
     }
 
@@ -141,8 +181,9 @@ public class SmartFlappy : Agent
             //OLD
             // GameControl.instance.BirdScored();
             
-            AddReward(+100);
             passedCol++;
+            AddReward(+100 * passedCol);
+
             Debug.Log(Time.time + "PASSED COLUMN:" + passedCol);
         }
     }
