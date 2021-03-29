@@ -7,11 +7,11 @@ public class GameControl : MonoBehaviour
     public GameObject sky1, sky2;
 
 
-    // public static GameControl instance;			//A reference to our game control script so we can access it statically.
+    // public static GameControl instance;
+    // //A reference to our game control script so we can access it statically.
     public Text scoreText; //A reference to the UI text component that displays the player's score.
 
-    public GameObject
-        gameOvertext; //A reference to the object that displays the text which appears when the player dies.
+    public GameObject gameOvertext; //A reference to the object that displays the text which appears when the player dies.
 
     private int score = 0; //The player's score.
     public bool gameOver = false; //Is the game over?

@@ -9,16 +9,12 @@ public class ColumnPool : MonoBehaviour
     public GameObject columnPrefab; //The column game object.
     public GameObject targetPrefab; //SCORE POINTS
 
-    
-    public int columnPoolSize = 5; //How many columns to keep on standby.
+
     public float spawnRate = 3f; //How quickly columns spawn.
     public float columnMin = -1f; //Minimum y value of the column position.
     public float columnMax = 3.5f; //Maximum y value of the column position.
 
 
-
-    
-    
     public int currentColumn = 0; //Index of the current column in the collection.
 
     public Vector2 objectPoolPosition = new Vector2(-15, -25); //A holding position for our unused columns offscreen.
@@ -26,31 +22,33 @@ public class ColumnPool : MonoBehaviour
 
     private float timeSinceLastSpawned;
 
-    [Space(20)]
+    [Space(20)] 
+    public int columnPoolSize = 4; //How many columns to keep on standby.
     public GameObject[] columns; //Collection of pooled columns.
     public GameObject[] targets; //Collection of pooled columns.
+
+
     void Start()
     {
         timeSinceLastSpawned = 0f;
 
-        //Initialize the columns collection.
-        columns = new GameObject[columnPoolSize];
-        targets = new GameObject[columnPoolSize];
-
-
-        //Loop through the collection... 
-        for (int i = 0; i < columnPoolSize; i++)
-        {
-            //...and create the individual columns.
-            columns[i] = Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
-            columns[i].GetComponent<ScrollingObject>().gameControl = gameControl;
-            
-            targets[i] = Instantiate(targetPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
-            targets[i].GetComponent<ScrollingObject>().gameControl = gameControl;
-            
-            
-            
-        }
+        // // CREATED IN THE SCENE NOT NEEDED ANYMORE
+        // //Initialize the columns collection.
+        // columns = new GameObject[columnPoolSize];
+        // targets = new GameObject[columnPoolSize];
+        // //Loop through the collection... 
+        // for (int i = 0; i < columnPoolSize; i++)
+        // {
+        //     //...and create the individual columns.
+        //     columns[i] = Instantiate(columnPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
+        //     columns[i].GetComponent<ScrollingObject>().gameControl = gameControl;
+        //     
+        //     targets[i] = Instantiate(targetPrefab, objectPoolPosition, Quaternion.identity, transform.parent);
+        //     targets[i].GetComponent<ScrollingObject>().gameControl = gameControl;
+        //     
+        //     
+        //     
+        // }
     }
 
 
@@ -98,6 +96,7 @@ public class ColumnPool : MonoBehaviour
             columns[i].transform.position = objectPoolPosition;
             targets[i].transform.position = objectPoolPosition;
 
+            currentColumn = 0;
         }
     }
 }

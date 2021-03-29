@@ -73,6 +73,7 @@ public class SmartFlappy : Agent
         
         //NEW
         gameControl.RestartGame();
+        columnPool.ResetColumns();
         //OLD
         // GameControl.instance.RestartGame();
     }
