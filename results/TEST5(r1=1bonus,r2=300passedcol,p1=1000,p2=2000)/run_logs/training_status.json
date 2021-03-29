@@ -1,0 +1,47 @@
+{
+    "SmartBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 1499930,
+                "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-1499930.onnx",
+                "reward": 1694.3285639836238,
+                "creation_time": 1616967384.8137186
+            },
+            {
+                "steps": 1999885,
+                "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-1999885.onnx",
+                "reward": 1745.9185207201087,
+                "creation_time": 1616969622.7364035
+            },
+            {
+                "steps": 2499911,
+                "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-2499911.onnx",
+                "reward": 1676.5550585114554,
+                "creation_time": 1616971859.525418
+            },
+            {
+                "steps": 2999894,
+                "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-2999894.onnx",
+                "reward": 1720.8167541949417,
+                "creation_time": 1616974098.3651917
+            },
+            {
+                "steps": 3455152,
+                "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-3455152.onnx",
+                "reward": null,
+                "creation_time": 1616976131.7034721
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3455152,
+            "file_path": "results\\TEST5(r1=1bonus,r2=300passedcol,p1=1000,p2=2000)\\SmartBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1616976131.7034721
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

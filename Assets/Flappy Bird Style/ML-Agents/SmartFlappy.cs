@@ -23,10 +23,11 @@ public class SmartFlappy : Agent
 
     [Tooltip("Whether this is training mode or gameplay mode")]
     public bool trainingMode;
-    
-    
-    
-    
+
+    // public GameObject closestTarget;
+
+
+
     /// <summary>
     /// Initialize the agent
     /// </summary>
@@ -51,7 +52,7 @@ public class SmartFlappy : Agent
     public override void OnEpisodeBegin()
     {
         
-        columnPool.ResetColumns();
+        // columnPool.ResetColumns();
         
         anim.SetTrigger("Reset");
         rb2d.velocity = Vector2.zero;
@@ -90,6 +91,8 @@ public class SmartFlappy : Agent
         sensor.AddObservation(transform.position);
         
         //ADD TARGET POSITIION TOO
+        // sensor.AddObservation(closestTarget.transform.position);
+
     }
 
 
@@ -100,8 +103,9 @@ public class SmartFlappy : Agent
         if (trainingMode && isDead == false)
         {
             life++;
-            var bonus = 0.05f * life;
-            AddReward(+5f+bonus);
+            var bonus = 0.01f * life;
+            AddReward(+1f+bonus);
+            
             
             if (actions.DiscreteActions[0] == 0)
             {
@@ -132,7 +136,7 @@ public class SmartFlappy : Agent
             //Look for input to trigger a "flap".
             if (Input.GetMouseButtonDown(0)) 
             {
-                Debug.Log("key pressed to fly");
+                // Debug.Log("key pressed to fly");
                 
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
@@ -149,8 +153,22 @@ public class SmartFlappy : Agent
     {
         
         // Debug.Log(other.gameObject.tag);
+
+        if (other.gameObject.CompareTag("BOUNDARY"))
+        {
+            SetReward(-1000);
+            // Debug.Log("hit boundary");
+
+            
+        }
+        else if (other.gameObject.CompareTag("COLUMN"))
+        {
+            SetReward(-2500);
+            // Debug.Log("hit column");
+
+        }
         
-        
+
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;
         // If the bird collides with something set it to dead...
@@ -164,7 +182,6 @@ public class SmartFlappy : Agent
         //OLD
         // GameControl.instance.BirdDied();
 
-        AddReward(-1000);
         
         EndEpisode();
     }
@@ -182,9 +199,12 @@ public class SmartFlappy : Agent
             // GameControl.instance.BirdScored();
             
             passedCol++;
-            AddReward(+100 * passedCol);
 
-            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol);
+            var targetReward = +300 * passedCol;
+                
+            AddReward(targetReward);
+
+            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol +" " + targetReward);
         }
     }
 }

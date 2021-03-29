@@ -2,17 +2,41 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 296878,
-                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-296878.onnx",
-                "reward": 702.0412142082835,
-                "creation_time": 1616911199.6276596
+                "steps": 381654,
+                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-381654.onnx",
+                "reward": null,
+                "creation_time": 1616915454.8953598
+            },
+            {
+                "steps": 499970,
+                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-499970.onnx",
+                "reward": 12321.619693640507,
+                "creation_time": 1616915860.5609238
+            },
+            {
+                "steps": 999991,
+                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-999991.onnx",
+                "reward": 12865.739330240885,
+                "creation_time": 1616917090.430748
+            },
+            {
+                "steps": 1499959,
+                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-1499959.onnx",
+                "reward": 13851.737845071932,
+                "creation_time": 1616918786.6631687
+            },
+            {
+                "steps": 1642526,
+                "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour\\SmartBehaviour-1642526.onnx",
+                "reward": 14028.588329060873,
+                "creation_time": 1616919497.279677
             }
         ],
         "final_checkpoint": {
-            "steps": 296878,
+            "steps": 1642526,
             "file_path": "results\\TEST3(r1=5bonus,r2=100passedcol,p1=1000)\\SmartBehaviour.onnx",
-            "reward": 702.0412142082835,
-            "creation_time": 1616911199.6276596
+            "reward": 14028.588329060873,
+            "creation_time": 1616919497.279677
         }
     },
     "metadata": {
