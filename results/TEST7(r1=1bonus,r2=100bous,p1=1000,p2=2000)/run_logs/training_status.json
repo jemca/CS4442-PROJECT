@@ -2,23 +2,41 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 4384,
-                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-4384.onnx",
-                "reward": -889.5479716058147,
-                "creation_time": 1616991193.5451663
+                "steps": 759650,
+                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-759650.onnx",
+                "reward": 392.23320141173247,
+                "creation_time": 1617002051.2998714
             },
             {
-                "steps": 67114,
-                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-67114.onnx",
-                "reward": -787.9058873793658,
-                "creation_time": 1616992343.7795591
+                "steps": 999925,
+                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-999925.onnx",
+                "reward": 682.2997421264648,
+                "creation_time": 1617002718.619583
+            },
+            {
+                "steps": 1167575,
+                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-1167575.onnx",
+                "reward": 802.5809865758039,
+                "creation_time": 1617003162.4923809
+            },
+            {
+                "steps": 1499985,
+                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-1499985.onnx",
+                "reward": 789.099658203125,
+                "creation_time": 1617004111.690075
+            },
+            {
+                "steps": 1974271,
+                "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour\\SmartBehaviour-1974271.onnx",
+                "reward": 1154.441565262644,
+                "creation_time": 1617005447.1600156
             }
         ],
         "final_checkpoint": {
-            "steps": 67114,
+            "steps": 1974271,
             "file_path": "results\\TEST7(r1=1bonus,r2=100bous,p1=1000,p2=2000)\\SmartBehaviour.onnx",
-            "reward": -787.9058873793658,
-            "creation_time": 1616992343.7795591
+            "reward": 1154.441565262644,
+            "creation_time": 1617005447.1600156
         }
     },
     "metadata": {

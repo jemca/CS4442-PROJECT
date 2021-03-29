@@ -68,6 +68,8 @@ public class SmartFlappy : Agent
         //NEW
         gameControl.RestartGame();
         columnPool.ResetColumns();
+
+
         //OLD
         // GameControl.instance.RestartGame();
 
@@ -75,6 +77,7 @@ public class SmartFlappy : Agent
         currentTargetIndex = 0;
         currentTarget = columnPool.targets[currentTargetIndex];
     }
+
 
     // OLD
     // private void Start()
@@ -87,9 +90,9 @@ public class SmartFlappy : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.position);
+        sensor.AddObservation(transform.localPosition);
 
-        sensor.AddObservation(currentTarget.transform.position);
+        sensor.AddObservation(currentTarget.transform.localPosition);
     }
 
 
@@ -99,9 +102,13 @@ public class SmartFlappy : Agent
 
         if (trainingMode && isDead == false)
         {
-            life++;
-            var bonus = 0.01f * life;
-            AddReward(+1f + bonus);
+            //same thing
+            // Debug.Log(this.StepCount);
+            // Debug.Log(life);
+
+            // life++;
+            // var bonus = 0.01f * life;
+            // AddReward(bonus);
 
 
             if (actions.DiscreteActions[0] == 0)
@@ -151,12 +158,12 @@ public class SmartFlappy : Agent
 
         if (other.gameObject.CompareTag("BOUNDARY"))
         {
-            SetReward(-1000);
+            AddReward(-1000);
             // Debug.Log("hit boundary");
         }
         else if (other.gameObject.CompareTag("COLUMN"))
         {
-            SetReward(-2500);
+            AddReward(-1000);
             // Debug.Log("hit column");
         }
 
@@ -182,6 +189,8 @@ public class SmartFlappy : Agent
     {
         if (other.gameObject.CompareTag("SCORE"))
         {
+            // Time.timeScale = 0;
+
             //If the bird hits the trigger collider in between the columns then
             //tell the game control that the bird scored.
 
@@ -189,13 +198,13 @@ public class SmartFlappy : Agent
             gameControl.BirdScored();
             //OLD
             // GameControl.instance.BirdScored();
-
+            
+            var targetReward = 1000 + 200 * passedCol;
             passedCol++;
-            var targetReward = +100 + 50 * passedCol;
 
             AddReward(targetReward);
 
-            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+            if (passedCol > 5) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
 
             currentTargetIndex = (currentTargetIndex + 1) % columnPool.columnPoolSize;
 
