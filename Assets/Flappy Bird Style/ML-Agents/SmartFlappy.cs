@@ -9,7 +9,7 @@ public class SmartFlappy : Agent
 {
     public GameControl gameControl; // this was a singleton before
     public ColumnPool columnPool;
-    
+
     public float upForce; //Upward force of the "flap".
     private bool isDead = false; //Has the player collided with a wall?
 
@@ -24,8 +24,8 @@ public class SmartFlappy : Agent
     [Tooltip("Whether this is training mode or gameplay mode")]
     public bool trainingMode;
 
-    // public GameObject closestTarget;
-
+    public GameObject currentTarget;
+    public int currentTargetIndex = 0;
 
 
     /// <summary>
@@ -33,52 +33,50 @@ public class SmartFlappy : Agent
     /// </summary>
     public override void Initialize()
     {
-        
         //Get reference to the Animator component attached to this GameObject.
         anim = GetComponent<Animator>();
         //Get and store a reference to the Rigidbody2D attached to this GameObject.
         rb2d = GetComponent<Rigidbody2D>();
-        
+
+
         // If not training mode, no max step, play forever
         if (!trainingMode) MaxStep = 0;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
     public override void OnEpisodeBegin()
     {
-        
         // columnPool.ResetColumns();
-        
+
         anim.SetTrigger("Reset");
         rb2d.velocity = Vector2.zero;
         // rb2d.angularVelocity = Single.NaN;
-        transform.localPosition = new Vector3(-2, Random.Range(-1.5f,4.5f), 0);
+        transform.localPosition = new Vector3(-2, Random.Range(-1.5f, 4.5f), 0);
         // transform.localRotation = Quaternion.Euler(0, 0, 0); //Quaternion.identity);
         // gameObject.GetComponent<SpriteRenderer>().sprite = initialSprite;
 
         isDead = false;
 
         // Debug.Log("episode begin");
-        
+
         // transform.localPosition = new Vector3(-2, 2, 0);
 
         passedCol = 0;
         life = 0;
-        
-        
+
+
         //NEW
         gameControl.RestartGame();
         columnPool.ResetColumns();
         //OLD
         // GameControl.instance.RestartGame();
+
+
+        currentTargetIndex = 0;
+        currentTarget = columnPool.targets[currentTargetIndex];
     }
 
-
+    // OLD
     // private void Start()
     // {
     //     //Get reference to the Animator component attached to this GameObject.
@@ -90,10 +88,8 @@ public class SmartFlappy : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.position);
-        
-        //ADD TARGET POSITIION TOO
-        // sensor.AddObservation(closestTarget.transform.position);
 
+        sensor.AddObservation(currentTarget.transform.position);
     }
 
 
@@ -105,13 +101,13 @@ public class SmartFlappy : Agent
         {
             life++;
             var bonus = 0.01f * life;
-            AddReward(+1f+bonus);
-            
-            
+            AddReward(+1f + bonus);
+
+
             if (actions.DiscreteActions[0] == 0)
             {
                 // Debug.Log("agent received input to fly");
-                
+
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
                 //...zero out the birds current y velocity before...
@@ -126,19 +122,18 @@ public class SmartFlappy : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         heuristicOnly = true;
-
     }
-    
+
     private void Update()
     {
         //Don't allow control if the bird has died.
-        if (isDead == false && heuristicOnly) 
+        if (isDead == false && heuristicOnly)
         {
             //Look for input to trigger a "flap".
-            if (Input.GetMouseButtonDown(0)) 
+            if (Input.GetMouseButtonDown(0))
             {
                 // Debug.Log("key pressed to fly");
-                
+
                 //...tell the animator about it and then...
                 anim.SetTrigger("Flap");
                 //...zero out the birds current y velocity before...
@@ -152,23 +147,19 @@ public class SmartFlappy : Agent
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        
         // Debug.Log(other.gameObject.tag);
 
         if (other.gameObject.CompareTag("BOUNDARY"))
         {
             SetReward(-1000);
             // Debug.Log("hit boundary");
-
-            
         }
         else if (other.gameObject.CompareTag("COLUMN"))
         {
             SetReward(-2500);
             // Debug.Log("hit column");
-
         }
-        
+
 
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;
@@ -177,13 +168,13 @@ public class SmartFlappy : Agent
         //...tell the Animator about it...
         anim.SetTrigger("Die");
         //...and tell the game control about it.
-        
+
         //NEW
-        gameControl.BirdDied();        
+        gameControl.BirdDied();
         //OLD
         // GameControl.instance.BirdDied();
 
-        
+
         EndEpisode();
     }
 
@@ -193,19 +184,24 @@ public class SmartFlappy : Agent
         {
             //If the bird hits the trigger collider in between the columns then
             //tell the game control that the bird scored.
-            
+
             //NEW
             gameControl.BirdScored();
             //OLD
             // GameControl.instance.BirdScored();
-            
-            passedCol++;
 
-            var targetReward = +300 * passedCol;
-                
+            passedCol++;
+            var targetReward = +100 + 50 * passedCol;
+
             AddReward(targetReward);
 
-            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol +" " + targetReward);
+            Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+
+            currentTargetIndex = (currentTargetIndex + 1) % columnPool.columnPoolSize;
+
+            // Debug.Log("current target index:" + currentTargetIndex);
+
+            currentTarget = columnPool.targets[currentTargetIndex];
         }
     }
 }

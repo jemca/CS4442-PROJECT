@@ -3,17 +3,15 @@ using UnityEngine.Serialization;
 
 public class ColumnPool : MonoBehaviour
 {
-    public GameControl gameControl;
     // public SmartFlappy bird;
-
-    public GameObject columnPrefab; //The column game object.
-    public GameObject targetPrefab; //SCORE POINTS
-
+    // public GameObject columnPrefab; //The column game object.
+    // public GameObject targetPrefab; //SCORE POINTS
+    
+    public GameControl gameControl;
 
     public float spawnRate = 3f; //How quickly columns spawn.
     public float columnMin = -1f; //Minimum y value of the column position.
     public float columnMax = 3.5f; //Maximum y value of the column position.
-
 
     public int currentColumn = 0; //Index of the current column in the collection.
 
@@ -82,10 +80,6 @@ public class ColumnPool : MonoBehaviour
             }
         }
 
-        // else if (gameControl.gameOver == true)
-        // {
-        //
-        // }
     }
 
 
