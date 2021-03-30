@@ -3,6 +3,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class SmartFlappy : Agent
@@ -25,8 +26,14 @@ public class SmartFlappy : Agent
     public bool trainingMode;
 
     public GameObject currentTarget;
+    public GameObject currentEnemy;
+
     public int currentTargetIndex = 0;
 
+    [FormerlySerializedAs("tagetBoxHeightFromCenter")]
+    public float targetBoxHeightFromCenter;
+
+    public float birdColumnGap;
 
     /// <summary>
     /// Initialize the agent
@@ -46,6 +53,8 @@ public class SmartFlappy : Agent
 
     public override void OnEpisodeBegin()
     {
+        isDead = false;
+
         // columnPool.ResetColumns();
 
         anim.SetTrigger("Reset");
@@ -55,7 +64,6 @@ public class SmartFlappy : Agent
         // transform.localRotation = Quaternion.Euler(0, 0, 0); //Quaternion.identity);
         // gameObject.GetComponent<SpriteRenderer>().sprite = initialSprite;
 
-        isDead = false;
 
         // Debug.Log("episode begin");
 
@@ -75,6 +83,7 @@ public class SmartFlappy : Agent
 
 
         currentTargetIndex = 0;
+        currentEnemy = columnPool.columns[currentTargetIndex];
         currentTarget = columnPool.targets[currentTargetIndex];
     }
 
@@ -90,14 +99,30 @@ public class SmartFlappy : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
+        var birdPosition = transform.localPosition;
+        var targetPosition = currentTarget.transform.localPosition;
+        var velocity = rb2d.velocity.y;
+        var enemyPosition = currentEnemy.transform.localPosition.x;
 
-        sensor.AddObservation(currentTarget.transform.localPosition);
+        sensor.AddObservation(birdPosition);
+
+        // Get a vector from the beak tip to the nearest flower
+        Vector3 toTargetDirection = targetPosition - birdPosition;
+
+        // sensor.AddObservation(toTargetDirection.normalized);
+        sensor.AddObservation(targetPosition);
+
+        sensor.AddObservation(velocity);
+        sensor.AddObservation(enemyPosition);
+
+        // Debug.Log(enemyPosition);
+        // Debug.Log($"bird:{birdPosition} target{targetPosition} totarget{toTargetDirection} normalized{toTargetDirection.normalized} velocityY{rb2d.velocity.y}" );
     }
 
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        // IT TAKES VALUES EVEN IF NOT TRAINING
         // Debug.Log(Time.time + " AI input: " + actions.DiscreteActions[0]);
 
         if (trainingMode && isDead == false)
@@ -106,9 +131,33 @@ public class SmartFlappy : Agent
             // Debug.Log(this.StepCount);
             // Debug.Log(life);
 
+
+            //OLD STAY ALIVE BONUS ACTUALLY WORKED
             // life++;
             // var bonus = 0.01f * life;
             // AddReward(bonus);
+            
+            //NEW STAY ALIVE AND STAY ALIGNED BONUS
+            var birdX = transform.position.x;
+            var enemyX = currentEnemy.transform.position.x;
+            var gap = enemyX - birdX;
+
+            if (gap > birdColumnGap)
+            {
+                var birdY = transform.position.y;
+                var targetY = currentTarget.transform.position.y;
+                var top = targetY + targetBoxHeightFromCenter;
+                var bottom = targetY - targetBoxHeightFromCenter;
+
+                if (birdY < top && birdY > bottom)
+                {
+                    // Debug.Log($"birdy{birdY} top{top} bottom{bottom}  ");
+                    var bonus = 0.01f * StepCount;
+                    AddReward(bonus);
+                    life = StepCount;
+
+                }
+            }
 
 
             if (actions.DiscreteActions[0] == 0)
@@ -128,6 +177,10 @@ public class SmartFlappy : Agent
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
+        // ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+        // discreteActions[0] = Input.GetMouseButtonDown(0) ? 0 : 1;
+
+
         heuristicOnly = true;
     }
 
@@ -137,7 +190,7 @@ public class SmartFlappy : Agent
         if (isDead == false && heuristicOnly)
         {
             //Look for input to trigger a "flap".
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) == true)
             {
                 // Debug.Log("key pressed to fly");
 
@@ -156,17 +209,19 @@ public class SmartFlappy : Agent
     {
         // Debug.Log(other.gameObject.tag);
 
-        if (other.gameObject.CompareTag("BOUNDARY"))
-        {
-            AddReward(-1000);
-            // Debug.Log("hit boundary");
-        }
-        else if (other.gameObject.CompareTag("COLUMN"))
-        {
-            AddReward(-1000);
-            // Debug.Log("hit column");
-        }
+        // If you wanna separate penalties but looks redundant
+        // if (other.gameObject.CompareTag("BOUNDARY"))
+        // {
+        //     AddReward(-1000);
+        //     // Debug.Log("hit boundary");
+        // }
+        // else if (other.gameObject.CompareTag("COLUMN"))
+        // {
+        //     AddReward(-1000);
+        //     // Debug.Log("hit column");
+        // }
 
+        AddReward(-1000);
 
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;
@@ -198,18 +253,19 @@ public class SmartFlappy : Agent
             gameControl.BirdScored();
             //OLD
             // GameControl.instance.BirdScored();
-            
+
             var targetReward = 1000 + 200 * passedCol;
             passedCol++;
 
             AddReward(targetReward);
 
-            if (passedCol > 5) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+            if (passedCol > 100) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
 
             currentTargetIndex = (currentTargetIndex + 1) % columnPool.columnPoolSize;
 
             // Debug.Log("current target index:" + currentTargetIndex);
 
+            currentEnemy = columnPool.columns[currentTargetIndex];
             currentTarget = columnPool.targets[currentTargetIndex];
         }
     }

@@ -1,0 +1,47 @@
+{
+    "SmartBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 1777272,
+                "file_path": "results\\TEST14\\SmartBehaviour\\SmartBehaviour-1777272.onnx",
+                "reward": null,
+                "creation_time": 1617091191.2461543
+            },
+            {
+                "steps": 1999965,
+                "file_path": "results\\TEST14\\SmartBehaviour\\SmartBehaviour-1999965.onnx",
+                "reward": 16340.13738656044,
+                "creation_time": 1617091912.0056937
+            },
+            {
+                "steps": 2482210,
+                "file_path": "results\\TEST14\\SmartBehaviour\\SmartBehaviour-2482210.onnx",
+                "reward": 55219.17882156372,
+                "creation_time": 1617093447.2050414
+            },
+            {
+                "steps": 2499977,
+                "file_path": "results\\TEST14\\SmartBehaviour\\SmartBehaviour-2499977.onnx",
+                "reward": 46563.559814453125,
+                "creation_time": 1617093549.5300405
+            },
+            {
+                "steps": 2810363,
+                "file_path": "results\\TEST14\\SmartBehaviour\\SmartBehaviour-2810363.onnx",
+                "reward": 14927.762675489697,
+                "creation_time": 1617094812.403568
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2810363,
+            "file_path": "results\\TEST14\\SmartBehaviour.onnx",
+            "reward": 14927.762675489697,
+            "creation_time": 1617094812.403568
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
