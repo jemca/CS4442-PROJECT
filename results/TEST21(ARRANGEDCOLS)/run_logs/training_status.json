@@ -2,18 +2,6 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 3499993,
-                "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-3499993.onnx",
-                "reward": 630744.3992919922,
-                "creation_time": 1617180584.5688972
-            },
-            {
-                "steps": 3871240,
-                "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-3871240.onnx",
-                "reward": null,
-                "creation_time": 1617181617.269583
-            },
-            {
                 "steps": 3999957,
                 "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-3999957.onnx",
                 "reward": 2622934.8010253906,
@@ -30,13 +18,25 @@
                 "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-4837871.onnx",
                 "reward": null,
                 "creation_time": 1617184499.9636195
+            },
+            {
+                "steps": 4999967,
+                "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-4999967.onnx",
+                "reward": 8220405.044921875,
+                "creation_time": 1617185124.8616636
+            },
+            {
+                "steps": 5000095,
+                "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour\\SmartBehaviour-5000095.onnx",
+                "reward": 8220405.044921875,
+                "creation_time": 1617185125.0246587
             }
         ],
         "final_checkpoint": {
-            "steps": 4837871,
+            "steps": 5000095,
             "file_path": "results\\TEST21(ARRANGEDCOLS)\\SmartBehaviour.onnx",
-            "reward": null,
-            "creation_time": 1617184499.9636195
+            "reward": 8220405.044921875,
+            "creation_time": 1617185125.0246587
         }
     },
     "metadata": {

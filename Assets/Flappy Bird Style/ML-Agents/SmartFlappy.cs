@@ -38,9 +38,9 @@ public class SmartFlappy : Agent
     public float tunnelBonus;
 
 
-    public Vector3 birdPosition;
-    public Vector3 tunnelPosition;
-    public Vector3 targetPosition;
+    // private Vector3 birdPosition;
+    // private Vector3 tunnelPosition;
+    // private Vector3 targetPosition;
 
 
     /// <summary>
@@ -108,9 +108,9 @@ public class SmartFlappy : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        birdPosition = transform.localPosition;
-        tunnelPosition = currentTunnel.transform.localPosition;
-        targetPosition = currentTarget.transform.localPosition;
+        var birdPosition = transform.localPosition;
+        var tunnelPosition = currentTunnel.transform.localPosition;
+        var targetPosition = currentTarget.transform.localPosition;
 
         var velocity = rb2d.velocity.y;
         var enemyPosition = currentEnemy.transform.localPosition.x;
@@ -127,6 +127,10 @@ public class SmartFlappy : Agent
 
         sensor.AddObservation(velocity);
         sensor.AddObservation(enemyPosition);
+        
+        
+        
+        
 
         // Debug.Log(enemyPosition);
         // Debug.Log($"bird:{birdPosition} target{targetPosition} totarget{toTargetDirection} normalized{toTargetDirection.normalized} velocityY{rb2d.velocity.y}" );
@@ -233,7 +237,9 @@ public class SmartFlappy : Agent
         //     // Debug.Log("hit column");
         // }
 
-        AddReward(-1000);
+        // AddReward(-1000);
+        AddReward(-1);
+
 
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;
@@ -269,17 +275,20 @@ public class SmartFlappy : Agent
             //OLD
             // GameControl.instance.BirdScored();
     
-            var targetReward = 1000 + 200 * passedCol;
+            // var targetReward = 1000 + 200 * passedCol;
+
+            var targetReward = 1;
+
             passedCol++;
     
             AddReward(targetReward);
 
-            if (passedCol > maxColumn)
-            {
-                maxColumn = passedCol;
-                if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
-
-            }
+            // if (passedCol > maxColumn)
+            // {
+            //     maxColumn = passedCol;
+            //     if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+            //
+            // }
                 
                 
                 
