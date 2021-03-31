@@ -18,6 +18,7 @@ public class SmartFlappy : Agent
     private Rigidbody2D rb2d; //Holds a reference to the Rigidbody2D component of the bird.
 
     public int passedCol = 0;
+    public int maxColumn=0;
     public int life = 0;
 
     public bool heuristicOnly;
@@ -272,8 +273,16 @@ public class SmartFlappy : Agent
             passedCol++;
     
             AddReward(targetReward);
-    
-            if (passedCol > 100) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+
+            if (passedCol > maxColumn)
+            {
+                maxColumn = passedCol;
+                if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+
+            }
+                
+                
+                
     
             currentTargetIndex = (currentTargetIndex + 1) % columnPool.columnPoolSize;
     
@@ -281,6 +290,7 @@ public class SmartFlappy : Agent
     
             currentEnemy = columnPool.columns[currentTargetIndex];
             currentTarget = columnPool.targets[currentTargetIndex];
+            currentTunnel = columnPool.tunnels[currentTargetIndex];
         }
     }
 
