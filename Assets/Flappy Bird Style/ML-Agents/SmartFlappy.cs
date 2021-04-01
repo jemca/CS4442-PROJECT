@@ -25,6 +25,7 @@ public class SmartFlappy : Agent
 
     [Tooltip("Whether this is training mode or gameplay mode")]
     public bool trainingMode;
+
     public GameObject currentTarget;
 
     public GameObject currentEnemy;
@@ -38,6 +39,7 @@ public class SmartFlappy : Agent
     public float tunnelBonus;
 
     public float birdTop, birdBottom;
+    public float birdHeight;
 
     // private Vector3 birdPosition;
     // private Vector3 tunnelPosition;
@@ -118,11 +120,11 @@ public class SmartFlappy : Agent
         var bird2D = new Vector2(birdX, birdY);
         sensor.AddObservation(bird2D);
 
-        var tunnelPosition = currentTunnel.transform.localPosition;
-        var tunnelX = tunnelPosition.x;
-        var tunnelY = tunnelPosition.y;
-        var tunnel2D = new Vector2(tunnelX, tunnelY);
-        sensor.AddObservation(tunnel2D);
+        // var tunnelPosition = currentTunnel.transform.localPosition;
+        // var tunnelX = tunnelPosition.x;
+        // var tunnelY = tunnelPosition.y;
+        // var tunnel2D = new Vector2(tunnelX, tunnelY);
+        // sensor.AddObservation(tunnel2D);
 
         var targetPosition = currentTarget.transform.localPosition;
         var targetX = targetPosition.x;
@@ -140,10 +142,10 @@ public class SmartFlappy : Agent
 
         birdTop = 5.5f - (birdY + 0.45f);
         birdBottom = -2.1f - (birdY - 0.45f);
-        
+
         sensor.AddObservation(birdTop);
         sensor.AddObservation(birdBottom);
-        
+
 
         // Get a vector from the beak tip to the nearest flower
         // Vector3 toTargetDirection = targetPosition - birdPosition;
@@ -173,27 +175,31 @@ public class SmartFlappy : Agent
             // var bonus = 0.01f * life;
             // AddReward(bonus);
 
-            //NEW STAY ALIVE AND STAY ALIGNED BONUS
-            var birdX = transform.localPosition.x;
-            var enemyX = currentEnemy.transform.localPosition.x;
-            var gap = enemyX - birdX;
-
-            if (gap > birdColumnGap)
+            if (trainingMode)
             {
+                //NEW STAY ALIVE AND STAY ALIGNED BONUS
+                // var birdX = transform.localPosition.x;
+                // var enemyX = currentEnemy.transform.localPosition.x;
+                // var gap = enemyX - birdX;
+                //
+                // if (gap > birdColumnGap)
+                // {
                 var birdY = transform.localPosition.y;
                 var targetY = currentTarget.transform.localPosition.y;
-                var top = targetY + targetBoxHeightFromCenter;
-                var bottom = targetY - targetBoxHeightFromCenter;
+                var top = targetY + targetBoxHeightFromCenter - birdHeight;
+                var bottom = targetY - targetBoxHeightFromCenter + birdHeight;
 
                 if (birdY < top && birdY > bottom)
                 {
-                    // Debug.Log($"birdy{birdY} top{top} bottom{bottom}  ");
-                    var bonus = 0.01f; //* StepCount;
+                    var bonus = 0.001f; //* StepCount;
                     AddReward(bonus);
+                    // Debug.Log($"birdy{birdY} top{top} bottom{bottom}  bonus{bonus}");
+
                     life = StepCount;
                 }
-            }
 
+                // }
+            }
 
             if (actions.DiscreteActions[0] == 1)
             {
@@ -208,9 +214,8 @@ public class SmartFlappy : Agent
                 rb2d.AddForce(new Vector2(0, upForce));
             }
         }
-        
-        if (isDead && !trainingMode) Time.timeScale = 0;
 
+        if (isDead && !trainingMode) Time.timeScale = 0;
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -260,7 +265,7 @@ public class SmartFlappy : Agent
         // }
 
         // AddReward(-1000);
-        AddReward(-1);
+        if (trainingMode) AddReward(-1f);
 
 
         // Zero out the bird's velocity
@@ -299,17 +304,16 @@ public class SmartFlappy : Agent
 
             // var targetReward = 1000 + 200 * passedCol;
 
-            var targetReward = 1;
+            // var targetReward = 1;
 
             passedCol++;
 
-            AddReward(targetReward);
+            if (trainingMode) AddReward(1f);
 
             if (passedCol > maxColumn)
             {
                 maxColumn = passedCol;
                 // if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
-            
             }
 
 
@@ -319,27 +323,27 @@ public class SmartFlappy : Agent
 
             currentEnemy = columnPool.columns[currentTargetIndex];
             currentTarget = columnPool.targets[currentTargetIndex];
-            currentTunnel = columnPool.tunnels[currentTargetIndex];
+            // currentTunnel = columnPool.tunnels[currentTargetIndex];
         }
     }
 
 
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("TUNNEL"))
-        {
-            tunnelBonus += 0.001f; //* StepCount;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("TUNNEL"))
-        {
-            AddReward(tunnelBonus);
-            // Debug.Log(tunnelBonus);
-
-            tunnelBonus = 0;
-        }
-    }
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     if (other.gameObject.CompareTag("TUNNEL"))
+    //     {
+    //         tunnelBonus += 0.001f; //* StepCount;
+    //     }
+    // }
+    //
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.gameObject.CompareTag("TUNNEL"))
+    //     {
+    //         AddReward(tunnelBonus);
+    //         // Debug.Log(tunnelBonus);
+    //
+    //         tunnelBonus = 0;
+    //     }
+    // }
 }

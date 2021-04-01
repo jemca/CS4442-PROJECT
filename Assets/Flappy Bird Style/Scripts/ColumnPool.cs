@@ -111,9 +111,8 @@ public class ColumnPool : MonoBehaviour
 
             //...then set the current column to that position.
             columns[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
-            targets[currentColumn].transform.localPosition =
-                new Vector3(spawnXPosition + targetOffsetFromColumn, spawnYPosition, 0);
-            tunnels[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
+            targets[currentColumn].transform.localPosition = new Vector3(spawnXPosition + targetOffsetFromColumn, spawnYPosition, 0);
+            // tunnels[currentColumn].transform.localPosition = new Vector3(spawnXPosition, spawnYPosition, 0);
 
 
             currentColumn = (currentColumn + 1) % columnPoolSize;
@@ -132,7 +131,7 @@ public class ColumnPool : MonoBehaviour
 
             columns[i].transform.localPosition = new Vector3(initialXPositions[i], spawnYPosition, 0);
             targets[i].transform.localPosition = new Vector3(initialXPositions[i] + targetOffsetFromColumn, spawnYPosition, 0);
-            tunnels[i].transform.localPosition = new Vector3(initialXPositions[i], spawnYPosition, 0);
+            // tunnels[i].transform.localPosition = new Vector3(initialXPositions[i], spawnYPosition, 0);
 
             currentColumn = 0;
         }
