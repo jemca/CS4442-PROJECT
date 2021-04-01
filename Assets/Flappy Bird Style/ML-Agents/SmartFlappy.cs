@@ -18,13 +18,13 @@ public class SmartFlappy : Agent
     private Rigidbody2D rb2d; //Holds a reference to the Rigidbody2D component of the bird.
 
     public int passedCol = 0;
-    public int maxColumn=0;
+    public int maxColumn = 0;
     public int life = 0;
 
     public bool heuristicOnly;
 
     [Tooltip("Whether this is training mode or gameplay mode")]
-    // public bool trainingMode;
+    public bool trainingMode;
     public GameObject currentTarget;
 
     public GameObject currentEnemy;
@@ -37,6 +37,7 @@ public class SmartFlappy : Agent
     public float birdColumnGap;
     public float tunnelBonus;
 
+    public float birdTop, birdBottom;
 
     // private Vector3 birdPosition;
     // private Vector3 tunnelPosition;
@@ -55,7 +56,10 @@ public class SmartFlappy : Agent
 
 
         // If not training mode, no max step, play forever
-        // if (!trainingMode) MaxStep = 0;
+        if (!trainingMode)
+        {
+            MaxStep = 0;
+        }
     }
 
 
@@ -109,28 +113,43 @@ public class SmartFlappy : Agent
     public override void CollectObservations(VectorSensor sensor)
     {
         var birdPosition = transform.localPosition;
+        var birdX = birdPosition.x;
+        var birdY = birdPosition.y;
+        var bird2D = new Vector2(birdX, birdY);
+        sensor.AddObservation(bird2D);
+
         var tunnelPosition = currentTunnel.transform.localPosition;
+        var tunnelX = tunnelPosition.x;
+        var tunnelY = tunnelPosition.y;
+        var tunnel2D = new Vector2(tunnelX, tunnelY);
+        sensor.AddObservation(tunnel2D);
+
         var targetPosition = currentTarget.transform.localPosition;
+        var targetX = targetPosition.x;
+        var targetY = targetPosition.y;
+        var target2D = new Vector2(targetX, targetY);
+        sensor.AddObservation(target2D);
+
 
         var velocity = rb2d.velocity.y;
+        sensor.AddObservation(velocity);
+
+
         var enemyPosition = currentEnemy.transform.localPosition.x;
+        sensor.AddObservation(enemyPosition);
 
-
-        sensor.AddObservation(birdPosition);
-        sensor.AddObservation(tunnelPosition);
+        birdTop = 5.5f - (birdY + 0.45f);
+        birdBottom = -2.1f - (birdY - 0.45f);
+        
+        sensor.AddObservation(birdTop);
+        sensor.AddObservation(birdBottom);
+        
 
         // Get a vector from the beak tip to the nearest flower
         // Vector3 toTargetDirection = targetPosition - birdPosition;
 
         // sensor.AddObservation(toTargetDirection.normalized);
-        sensor.AddObservation(targetPosition);
 
-        sensor.AddObservation(velocity);
-        sensor.AddObservation(enemyPosition);
-        
-        
-        
-        
 
         // Debug.Log(enemyPosition);
         // Debug.Log($"bird:{birdPosition} target{targetPosition} totarget{toTargetDirection} normalized{toTargetDirection.normalized} velocityY{rb2d.velocity.y}" );
@@ -169,7 +188,7 @@ public class SmartFlappy : Agent
                 if (birdY < top && birdY > bottom)
                 {
                     // Debug.Log($"birdy{birdY} top{top} bottom{bottom}  ");
-                    var bonus = 1f; //* StepCount;
+                    var bonus = 0.01f; //* StepCount;
                     AddReward(bonus);
                     life = StepCount;
                 }
@@ -189,6 +208,9 @@ public class SmartFlappy : Agent
                 rb2d.AddForce(new Vector2(0, upForce));
             }
         }
+        
+        if (isDead && !trainingMode) Time.timeScale = 0;
+
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -247,7 +269,7 @@ public class SmartFlappy : Agent
         isDead = true;
 
         // tunnelBonus = 0;
-        
+
         //...tell the Animator about it...
         anim.SetTrigger("Die");
         //...and tell the game control about it.
@@ -266,37 +288,35 @@ public class SmartFlappy : Agent
         if (other.gameObject.CompareTag("SCORE"))
         {
             // Time.timeScale = 0;
-    
+
             //If the bird hits the trigger collider in between the columns then
             //tell the game control that the bird scored.
-    
+
             //NEW
             gameControl.BirdScored();
             //OLD
             // GameControl.instance.BirdScored();
-    
+
             // var targetReward = 1000 + 200 * passedCol;
 
             var targetReward = 1;
 
             passedCol++;
-    
+
             AddReward(targetReward);
 
-            // if (passedCol > maxColumn)
-            // {
-            //     maxColumn = passedCol;
-            //     if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
-            //
-            // }
-                
-                
-                
-    
+            if (passedCol > maxColumn)
+            {
+                maxColumn = passedCol;
+                // if(maxColumn > 1000) Debug.Log(Time.time + "PASSED COLUMN:" + passedCol + " " + targetReward);
+            
+            }
+
+
             currentTargetIndex = (currentTargetIndex + 1) % columnPool.columnPoolSize;
-    
+
             // Debug.Log("current target index:" + currentTargetIndex);
-    
+
             currentEnemy = columnPool.columns[currentTargetIndex];
             currentTarget = columnPool.targets[currentTargetIndex];
             currentTunnel = columnPool.tunnels[currentTargetIndex];
@@ -308,7 +328,7 @@ public class SmartFlappy : Agent
     {
         if (other.gameObject.CompareTag("TUNNEL"))
         {
-            tunnelBonus += 0.1f; //* StepCount;
+            tunnelBonus += 0.001f; //* StepCount;
         }
     }
 
@@ -316,12 +336,10 @@ public class SmartFlappy : Agent
     {
         if (other.gameObject.CompareTag("TUNNEL"))
         {
-            
             AddReward(tunnelBonus);
             // Debug.Log(tunnelBonus);
 
             tunnelBonus = 0;
         }
-
     }
 }
