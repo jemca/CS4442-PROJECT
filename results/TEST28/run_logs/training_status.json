@@ -12,13 +12,25 @@
                 "file_path": "results\\TEST28\\SmartBehaviour\\SmartBehaviour-470326.onnx",
                 "reward": 3.1944184688109796,
                 "creation_time": 1617271791.7045999
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\TEST28\\SmartBehaviour\\SmartBehaviour-0.onnx",
+                "reward": null,
+                "creation_time": 1617272288.7852085
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\TEST28\\SmartBehaviour\\SmartBehaviour-0.onnx",
+                "reward": null,
+                "creation_time": 1617272366.1729379
             }
         ],
         "final_checkpoint": {
-            "steps": 470326,
+            "steps": 0,
             "file_path": "results\\TEST28\\SmartBehaviour.onnx",
-            "reward": 3.1944184688109796,
-            "creation_time": 1617271791.7045999
+            "reward": null,
+            "creation_time": 1617272366.1729379
         }
     },
     "metadata": {
