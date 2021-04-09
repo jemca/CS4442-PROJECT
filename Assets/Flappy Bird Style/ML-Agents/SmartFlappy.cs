@@ -191,7 +191,7 @@ public class SmartFlappy : Agent
 
                 if (birdY < top && birdY > bottom)
                 {
-                    var bonus = 0.001f; //* StepCount;
+                    var bonus = 0.0001f; //* StepCount;
                     AddReward(bonus);
                     // Debug.Log($"birdy{birdY} top{top} bottom{bottom}  bonus{bonus}");
 
@@ -266,7 +266,9 @@ public class SmartFlappy : Agent
 
         // AddReward(-1000);
         if (trainingMode) AddReward(-1f);
-
+        
+        // STOP TO SEE WHERE THE BIRDS HITS
+        else if(heuristicOnly) Time.timeScale = 0;
 
         // Zero out the bird's velocity
         rb2d.velocity = Vector2.zero;

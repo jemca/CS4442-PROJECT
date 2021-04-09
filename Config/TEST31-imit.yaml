@@ -1,0 +1,34 @@
+behaviors:
+  SmartBehaviour:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 512
+      buffer_size: 20480
+      learning_rate: 0.003
+      beta: 0.01
+      epsilon: 0.16
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: linear
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 4
+      vis_encode_type: simple
+    reward_signals:
+      extrinsic:
+        gamma: 0.8
+        strength: 0.1
+      gail:
+        gamma: 0.8
+        strength: 0.5
+        demo_path: Demo/imitation.demo
+    behavioral_cloning:
+      gamma: 0.8
+      strength: 1.0
+      demo_path: Demo/imitation.demo
+    keep_checkpoints: 5
+    max_steps: 5000000
+    time_horizon: 256
+    summary_freq: 30000
+    threaded: true

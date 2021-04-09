@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ContentModelUserStore">
+  <component name="UserContentModel">
     <attachedFolders />
     <explicitIncludes>
       <Path>Library/PackageCache/com.unity.2d.animation@3.2.6</Path>
@@ -28,6 +28,7 @@
       <Path>.git</Path>
       <Path>.idea</Path>
       <Path>Config</Path>
+      <Path>Demo</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>Temp</Path>
