@@ -2,12 +2,6 @@
     "SmartBehaviour": {
         "checkpoints": [
             {
-                "steps": 290779,
-                "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-290779.onnx",
-                "reward": null,
-                "creation_time": 1618128707.1731527
-            },
-            {
                 "steps": 500605,
                 "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-500605.onnx",
                 "reward": null,
@@ -18,13 +12,31 @@
                 "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-500605.onnx",
                 "reward": null,
                 "creation_time": 1618128781.9441597
+            },
+            {
+                "steps": 500605,
+                "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-500605.onnx",
+                "reward": null,
+                "creation_time": 1618143010.403042
+            },
+            {
+                "steps": 500605,
+                "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-500605.onnx",
+                "reward": null,
+                "creation_time": 1618143053.3962116
+            },
+            {
+                "steps": 0,
+                "file_path": "results\\TEST55sac-f39\\SmartBehaviour\\SmartBehaviour-0.onnx",
+                "reward": null,
+                "creation_time": 1618143119.1303332
             }
         ],
         "final_checkpoint": {
-            "steps": 500605,
+            "steps": 0,
             "file_path": "results\\TEST55sac-f39\\SmartBehaviour.onnx",
             "reward": null,
-            "creation_time": 1618128781.9441597
+            "creation_time": 1618143119.1303332
         }
     },
     "metadata": {

@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1618137145",
+        "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\home-user\\Desktop\\CS4442-Project\\Flappy_Bird\\venv\\Scripts\\mlagents-learn Config\\TEST55ppo.yaml --run-id=TEST55ppo-f51 --initialize-from=TEST51ppo-f50 --force",
+        "mlagents_version": "0.25.0",
+        "mlagents_envs_version": "0.25.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.20.1",
+        "end_time_seconds": "1618137158"
+    },
+    "total": 12.2863086,
+    "count": 1,
+    "self": 0.016930199999999118,
+    "children": {
+        "run_training.setup": {
+            "total": 0.1934167,
+            "count": 1,
+            "self": 0.1934167
+        },
+        "TrainerController.start_learning": {
+            "total": 12.0759617,
+            "count": 1,
+            "self": 0.0034164000000007633,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 12.0716363,
+                    "count": 1,
+                    "self": 12.0716363
+                },
+                "trainer_threads": {
+                    "total": 2.000000000279556e-06,
+                    "count": 1,
+                    "self": 2.000000000279556e-06
+                },
+                "TrainerController._save_models": {
+                    "total": 0.0009069999999997691,
+                    "count": 1,
+                    "self": 0.0009069999999997691
+                }
+            }
+        }
+    }
+}

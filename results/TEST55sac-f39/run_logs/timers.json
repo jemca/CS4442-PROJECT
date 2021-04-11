@@ -2,73 +2,44 @@
     "name": "root",
     "metadata": {
         "timer_format_version": "0.1.0",
-        "start_time_seconds": "1618128767",
+        "start_time_seconds": "1618143102",
         "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
-        "command_line_arguments": "C:\\Users\\home-user\\Desktop\\CS4442-Project\\Flappy_Bird\\venv\\Scripts\\mlagents-learn Config\\TEST55-sac.yaml --run-id=TEST55sac-f39 --resume",
+        "command_line_arguments": "C:\\Users\\home-user\\Desktop\\CS4442-Project\\Flappy_Bird\\venv\\Scripts\\mlagents-learn --run-id=TEST55sac-f39 --resume",
         "mlagents_version": "0.25.0",
         "mlagents_envs_version": "0.25.0",
         "communication_protocol_version": "1.5.0",
         "pytorch_version": "1.7.1+cu110",
         "numpy_version": "1.20.1",
-        "end_time_seconds": "1618128782"
+        "end_time_seconds": "1618143119"
     },
-    "total": 14.778970000000001,
+    "total": 16.424058600000002,
     "count": 1,
-    "self": 0.09751710000000102,
+    "self": 0.00882750000000243,
     "children": {
         "run_training.setup": {
-            "total": 0.18791069999999999,
+            "total": 0.19172520000000004,
             "count": 1,
-            "self": 0.18791069999999999
+            "self": 0.19172520000000004
         },
         "TrainerController.start_learning": {
-            "total": 14.4935422,
+            "total": 16.2235059,
             "count": 1,
-            "self": 0.002709799999998097,
+            "self": 0.00013509999999428146,
             "children": {
                 "TrainerController._reset_env": {
-                    "total": 14.2465866,
+                    "total": 16.083336600000003,
                     "count": 1,
-                    "self": 14.2465866
-                },
-                "trainer_threads": {
-                    "total": 2.040000000036457e-05,
-                    "count": 1,
-                    "self": 2.040000000036457e-05,
-                    "children": {
-                        "thread_root": {
-                            "total": 0.0,
-                            "count": 0,
-                            "is_parallel": true,
-                            "self": 0.0,
-                            "children": {
-                                "trainer_advance": {
-                                    "total": 0.002579500000001289,
-                                    "count": 1,
-                                    "is_parallel": true,
-                                    "self": 4.290000000217731e-05,
-                                    "children": {
-                                        "process_trajectory": {
-                                            "total": 0.002536599999999112,
-                                            "count": 1,
-                                            "is_parallel": true,
-                                            "self": 0.002536599999999112
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    "self": 16.083336600000003
                 },
                 "TrainerController._save_models": {
-                    "total": 0.24422540000000126,
+                    "total": 0.14003420000000233,
                     "count": 1,
-                    "self": 0.08108220000000088,
+                    "self": 0.013977900000000432,
                     "children": {
                         "RLTrainer._checkpoint": {
-                            "total": 0.16314320000000038,
+                            "total": 0.1260563000000019,
                             "count": 1,
-                            "self": 0.16314320000000038
+                            "self": 0.1260563000000019
                         }
                     }
                 }
