@@ -1,0 +1,29 @@
+{
+    "SmartBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499963,
+                "file_path": "results\\TEST45\\SmartBehaviour\\SmartBehaviour-499963.onnx",
+                "reward": null,
+                "creation_time": 1617994299.7981603
+            },
+            {
+                "steps": 500027,
+                "file_path": "results\\TEST45\\SmartBehaviour\\SmartBehaviour-500027.onnx",
+                "reward": null,
+                "creation_time": 1617994318.0534213
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500027,
+            "file_path": "results\\TEST45\\SmartBehaviour.onnx",
+            "reward": null,
+            "creation_time": 1617994318.0534213
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

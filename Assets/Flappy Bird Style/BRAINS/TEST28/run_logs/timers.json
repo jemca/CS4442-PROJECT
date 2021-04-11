@@ -1,0 +1,49 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1617272356",
+        "python_version": "3.7.9 (tags/v3.7.9:13c94747c7, Aug 17 2020, 18:58:18) [MSC v.1900 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\home-user\\Desktop\\CS4442-Project\\Flappy_Bird\\venv\\Scripts\\mlagents-learn Config\\TEST28.yaml --run-id=TEST28 --resume",
+        "mlagents_version": "0.25.0",
+        "mlagents_envs_version": "0.25.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.20.1",
+        "end_time_seconds": "1617272366"
+    },
+    "total": 9.549555999999999,
+    "count": 1,
+    "self": 0.03467819999999833,
+    "children": {
+        "run_training.setup": {
+            "total": 0.18891950000000013,
+            "count": 1,
+            "self": 0.18891950000000013
+        },
+        "TrainerController.start_learning": {
+            "total": 9.3259583,
+            "count": 1,
+            "self": 0.00019960000000018852,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.1678546,
+                    "count": 1,
+                    "self": 9.1678546
+                },
+                "TrainerController._save_models": {
+                    "total": 0.15790409999999966,
+                    "count": 1,
+                    "self": 0.013883699999999166,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.1440204000000005,
+                            "count": 1,
+                            "self": 0.1440204000000005
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
