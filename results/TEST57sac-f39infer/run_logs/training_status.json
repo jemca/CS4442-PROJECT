@@ -1,0 +1,17 @@
+{
+    "SmartBehaviour": {
+        "checkpoints": [
+            {
+                "steps": 499991,
+                "file_path": "results\\TEST57sac-f39infer\\SmartBehaviour\\SmartBehaviour-499991.onnx",
+                "reward": 25.722292489162093,
+                "creation_time": 1618149138.6867142
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.2.0",
+        "mlagents_version": "0.25.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
